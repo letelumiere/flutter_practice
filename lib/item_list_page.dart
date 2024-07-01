@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/constants.dart';
+import 'package:flutter_practice/item_details_page.dart';
 import 'package:flutter_practice/models/product.dart';
 
 class ItemListPage extends StatefulWidget {
@@ -69,26 +70,39 @@ class _ItemListPageState extends State<ItemListPage> {
   }
 
   Widget productContainer({required int productNo, required productName, required productImageUrl, required price}){
-    return Column(
-      children: [
-        CachedNetworkImage(
-          height : 150,
-          fit: BoxFit.cover,
-          imageUrl: productImageUrl,
-          placeholder: (context, url){
-            return const Center(child: CircularProgressIndicator(strokeWidth: 2));
-          }
-        ),
-        Container(
-          padding: const EdgeInsets.all(4),
-          child: Text(productName,
-          style: const TextStyle(fontWeight: FontWeight.bold))
-        ),
-        Container(
-          padding: const EdgeInsets.all(4),
-          child : Text("${numberFormat.format(price)}원"),
-        ),
-      ],
+    return GestureDetector(
+      onTap: (){
+        Navigator.of(context).push(MaterialPageRoute(
+          builder: (context){
+            return ItemDetailsPage(
+              productNo : productNo,
+              productName : productName,
+              productImageUrl : productImageUrl,
+              price : price,
+            );
+          }));
+      },        
+      child: Column(
+        children: [
+          CachedNetworkImage(
+            height : 150,
+            fit: BoxFit.cover,
+            imageUrl: productImageUrl,
+            placeholder: (context, url){
+              return const Center(child: CircularProgressIndicator(strokeWidth: 2));
+            }
+          ),
+          Container(
+            padding: const EdgeInsets.all(4),
+            child: Text(productName,
+            style: const TextStyle(fontWeight: FontWeight.bold))
+          ),
+          Container(
+            padding: const EdgeInsets.all(4),
+            child : Text("${numberFormat.format(price)}원"),
+          ),
+        ],
+      ),
     );
 
   }

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/models/product.dart';
 import 'package:flutter_practice/services/cart_services.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'constants.dart';
+import '../constants.dart';
 
 class ItemBasketPage extends StatefulWidget {
   const ItemBasketPage({super.key});

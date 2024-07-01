@@ -1,7 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_practice/constants.dart';
-import 'package:flutter_practice/item_basket_page.dart';
+import 'package:flutter_practice/views/item_basket_page.dart';
 
 class ItemDetailsPage extends StatefulWidget {
   int productNo;

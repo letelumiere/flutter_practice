@@ -1,47 +1,43 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_practice/models/product.dart';
-import 'package:flutter_practice/services/cart_services.dart';
-import 'package:shared_preferences/shared_preferences.dart';
-import '../constants.dart';
+import 'package:flutter_practice/viewModels/cartViewModel.dart';
+import 'package:flutter_practice/widgets/basketItem.dart';
+import 'package:flutter_practice/widgets/basketList.dart';
+import 'package:flutter_practice/widgets/checkoutButton.dart';
+import 'package:provider/provider.dart';
 
-class ItemBasketPage extends StatefulWidget {
-  const ItemBasketPage({super.key});
+class ItemBasketPage extends StatelessWidget {
+  const ItemBasketPage({Key? key}) : super(key: key);
 
-  @override
-  State<ItemBasketPage> createState() => _ItemBasketPageState();
-}
-
-class _ItemBasketPageState extends State<ItemBasketPage> {
-  late CartService cartService;
-  Map<String, dynamic> cartMap = {};
-  List<int> keyList = [];
-  Stream<QuerySnapshot<Product>>? productList;
-
-  @override
-  void initState() {
-    super.initState();
-    _initializeCartService();
-  }
-
-  Future<void> _initializeCartService() async {
-    final sharedPreferences = await SharedPreferences.getInstance();
-    cartService = CartService(sharedPreferences: sharedPreferences);
-
-    setState(() {
-      cartMap = cartService.getCartMap();
-      keyList = cartService.getKeyList(cartMap);
-      final productListRef = cartService.getProductListRef(keyList);
-      productList = cartService.getProductListStream(productListRef);
-    });
-  }
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text("임시 창")),
-
+      appBar: AppBar(
+        title: const Text("장바구니"),
+        centerTitle: true,
+      ),
+      body: Consumer<CartViewModel>(
+        builder: (context, viewModel, child) {
+          return viewModel.cartMap.isEmpty
+              ? const Center(
+                  child: Text("장바구니에 담긴 제품이 없습니다."),
+                )
+              : BasketList(
+                  cartMap: viewModel.cartMap,
+                  productList: viewModel.productList,
+                  cartService: viewModel.cartService,
+                );
+        },
+      ),
+      bottomNavigationBar: Consumer<CartViewModel>(
+        builder: (context, viewModel, child) {
+          return viewModel.cartMap.isEmpty
+              ? const SizedBox.shrink()
+              : CheckoutButton(
+                  cartMap: viewModel.cartMap,
+                  productList: viewModel.productList,
+                );
+        },
+      ),
     );
   }
-  }
-
+}

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_practice/viewModels/cartViewModel.dart';
 import 'package:flutter_practice/widgets/basketItem.dart';
 import 'package:flutter_practice/widgets/basketList.dart';
+import 'package:flutter_practice/services/cart_services.dart';
 import 'package:flutter_practice/widgets/checkoutButton.dart';
 import 'package:provider/provider.dart';
 
 class ItemBasketPage extends StatelessWidget {
-  const ItemBasketPage({Key? key}) : super(key: key);
+  const ItemBasketPage({super.key});
+
 
   @override
   Widget build(BuildContext context) {

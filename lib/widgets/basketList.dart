@@ -63,14 +63,14 @@ class BasketItem extends StatelessWidget {
   final CartService cartService;
 
   const BasketItem({
-    Key? key,
+    super.key,
     required this.productNo,
     required this.productName,
     required this.productImageUrl,
     required this.price,
     required this.quantity,
     required this.cartService,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
